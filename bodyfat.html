@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitHaiBoss - Body Fat & Diet Planner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #e3f2fd url('https://www.transparenttextures.com/patterns/cubes.png');
+      background-blend-mode: overlay;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .title-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .site-title {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(to right, #0d47a1, #1976d2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    .site-title span {
+      font-weight: 900;
+      background: linear-gradient(to right, #039be5, #00bcd4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #555;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 10px;
+      display: block;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #1976d2;
+      color: white;
+      font-weight: 600;
+      padding: 12px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background-color: #1565c0;
+    }
+
+    #result, #dietPlan {
+      margin-top: 25px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #e1f5fe;
+      border-left: 5px solid #039be5;
+      font-size: 14px;
+    }
+
+    #dietPlan h3 {
+      margin-top: 0;
+      color: #0277bd;
+    }
+
+    @media (max-width: 480px) {
+      .site-title {
+        font-size: 24px;
+      }
+      .subtitle {
+        font-size: 13px;
+      }
+      button {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title-box">
+      <h1 class="site-title">💪 <span>Fit</span>Hai<span>Boss</span></h1>
+      <p class="subtitle">Be Fit. Stay Strong. Rule Your Diet. 💥</p>
+    </div>
+
+    <label for="gender">Gender:</label>
+    <select id="gender">
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" placeholder="e.g. 25" />
+
+    <label for="height">Height (cm):</label>
+    <input type="number" id="height" placeholder="e.g. 175" />
+
+    <label for="weight">Weight (kg):</label>
+    <input type="number" id="weight" placeholder="e.g. 70" />
+
+    <label for="neck">Neck (cm):</label>
+    <input type="number" id="neck" />
+
+    <label for="waist">Waist (cm):</label>
+    <input type="number" id="waist" />
+
+    <label for="hip">Hip (cm): <small>(Only for females)</small></label>
+    <input type="number" id="hip" />
+
+    <label for="goal">Goal:</label>
+    <select id="goal">
+      <option value="lose">Lose Weight</option>
+      <option value="gain">Gain Weight</option>
+      <option value="maintain">Maintain Weight</option>
+    </select>
+
+    <label for="diet">Diet Type:</label>
+    <select id="diet">
+      <option value="veg">Vegetarian</option>
+      <option value="nonveg">Non-Vegetarian</option>
+    </select>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="result"></div>
+    <div id="dietPlan"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      const gender = document.getElementById("gender").value;
+      const age = parseFloat(document.getElementById("age").value);
+      const height = parseFloat(document.getElementById("height").value);
+      const weight = parseFloat(document.getElementById("weight").value);
+      const neck = parseFloat(document.getElementById("neck").value);
+      const waist = parseFloat(document.getElementById("waist").value);
+      const hip = parseFloat(document.getElementById("hip").value);
+      const goal = document.getElementById("goal").value;
+      const diet = document.getElementById("diet").value;
+
+      let bodyFat = 0;
+      if (gender === "Male") {
+        bodyFat = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450;
+      } else {
+        bodyFat = 495 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.221 * Math.log10(height)) - 450;
+      }
+      bodyFat = bodyFat.toFixed(2);
+
+      let bmr;
+      if (gender === "Male") {
+        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+      } else {
+        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+      }
+
+      let calories = bmr * 1.375;
+      if (goal === "lose") calories -= 500;
+      if (goal === "gain") calories += 500;
+
+      document.getElementById("result").innerHTML =
+        `<strong>Estimated Body Fat:</strong> ${bodyFat}%<br><strong>Calorie Requirement:</strong> ${Math.round(calories)} kcal/day`;
+
+      let proteinPerKg = goal === "lose" ? 1.2 : 1.6; // g per kg of body weight
+let totalProtein = Math.round(weight * proteinPerKg); // target protein
+
+let targetCalories = Math.round(calories); // from earlier BMR logic
+
+let plan = "";
+
+if (diet === "veg") {
+  if (goal === "lose") {
+    plan = `
+      <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
+      - 🥣 <strong>Breakfast:</strong> Oats with almond milk and apple  
+        <br><small>~250 kcal, 10g protein</small><br>
+      - 🥬 <strong>Lunch:</strong> Mixed veg curry, 1 roti, salad  
+        <br><small>~350 kcal, 15g protein</small><br>
+      - 🍵 <strong>Snack:</strong> Green tea + sprouts  
+        <br><small>~150 kcal, 12g protein</small><br>
+      - 🍚 <strong>Dinner:</strong> Moong dal and brown rice  
+        <br><small>~400 kcal, 18g protein</small><br>
+      <br><strong>Total:</strong> ~1150 kcal, 55g protein
+    `;
+  } else {
+    plan = `
+      <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
+      - 🧀 <strong>Breakfast:</strong> Paneer sandwich + banana shake  
+        <br><small>~450 kcal, 25g protein</small><br>
+      - 🍛 <strong>Lunch:</strong> Chole with rice and salad  
+        <br><small>~500 kcal, 20g protein</small><br>
+      - 🥜 <strong>Snack:</strong> Peanut butter toast + dry fruits  
+        <br><small>~400 kcal, 15g protein</small><br>
+      - 🥘 <strong>Dinner:</strong> Veg khichdi + curd  
+        <br><small>~500 kcal, 18g protein</small><br>
+      <br><strong>Total:</strong> ~1850 kcal, 78g protein
+    `;
+  }
+} else {
+  if (goal === "lose") {
+    plan = `
+      <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
+      - 🍳 <strong>Breakfast:</strong> Boiled eggs + apple  
+        <br><small>~250 kcal, 15g protein</small><br>
+      - 🥗 <strong>Lunch:</strong> Grilled chicken + salad  
+        <br><small>~400 kcal, 30g protein</small><br>
+      - 🍵 <strong>Snack:</strong> Boiled egg + green tea  
+        <br><small>~150 kcal, 10g protein</small><br>
+      - 🍲 <strong>Dinner:</strong> Chicken soup + steamed veggies  
+        <br><small>~400 kcal, 28g protein</small><br>
+      <br><strong>Total:</strong> ~1200 kcal, 83g protein
+    `;
+  } else {
+    plan = `
+      <strong>Target:</strong> ~${targetCalories} kcal & ${totalProtein}g protein<br><br>
+      - 🐣 <strong>Breakfast:</strong> Omelet + milk + toast  
+        <br><small>~450 kcal, 25g protein</small><br>
+      - 🍗 <strong>Lunch:</strong> Chicken curry + rice  
+        <br><small>~600 kcal, 35g protein</small><br>
+      - 🥤 <strong>Snack:</strong> Protein shake + boiled eggs  
+        <br><small>~450 kcal, 30g protein</small><br>
+      - 🍖 <strong>Dinner:</strong> Egg curry + roti  
+        <br><small>~500 kcal, 30g protein</small><br>
+      <br><strong>Total:</strong> ~2000 kcal, 120g protein
+    `;
+  }
+}
+
+
+
+      document.getElementById("dietPlan").innerHTML =
+        `<h3>Your ${diet === "veg" ? "Vegetarian" : "Non-Vegetarian"} Diet Plan (${goal})</h3>` + plan;
+    
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/1a48c45540077978812dbd0f820e4f06/invoke.js"></script>
+</body>
+</html>

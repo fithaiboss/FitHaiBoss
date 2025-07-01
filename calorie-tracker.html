@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calories Tracker - FitHaiBoss</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #e3f2fd;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #0d47a1;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #1976d2;
+      color: white;
+      border: none;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #e1f5fe;
+      padding: 10px;
+      margin-top: 10px;
+      border-left: 5px solid #039be5;
+      border-radius: 6px;
+    }
+
+    .total {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #0277bd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🍎 Calories Tracker</h2>
+    <input type="text" id="food" placeholder="Food item (e.g. Banana)" />
+    <input type="number" id="calories" placeholder="Calories (e.g. 90)" />
+    <button onclick="addItem()">Add</button>
+
+    <ul id="list"></ul>
+
+    <div class="total" id="totalCalories">Total: 0 kcal</div>
+  </div>
+
+  <script>
+    let total = 0;
+
+    function addItem() {
+      const food = document.getElementById("food").value;
+      const cal = parseInt(document.getElementById("calories").value);
+      if (food && !isNaN(cal)) {
+        const li = document.createElement("li");
+        li.innerText = `${food}: ${cal} kcal`;
+        document.getElementById("list").appendChild(li);
+        total += cal;
+        document.getElementById("totalCalories").innerText = `Total: ${total} kcal`;
+        document.getElementById("food").value = "";
+        document.getElementById("calories").value = "";
+      }
+    }
+  </script>
+</body>
+</html>

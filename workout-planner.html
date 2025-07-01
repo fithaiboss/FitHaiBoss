@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workout - FitHaiBoss</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #e3f2fd;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #1976d2;
+    }
+    .option {
+      background: #1976d2;
+      color: white;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .plan {
+      display: none;
+      margin-top: 20px;
+    }
+    h2 {
+      color: #0d47a1;
+      margin-top: 20px;
+    }
+    ul {
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>💪 Workout Options</h1>
+    <div class="option" onclick="togglePlan('home')">🏠 Home Workout Plan</div>
+    <div class="option" onclick="togglePlan('loss')">🔥 Weight Loss Plan</div>
+    <div class="option" onclick="togglePlan('muscle')">🏋️‍♂️ Muscle Gain (Weight Training) Plan</div>
+
+    <div id="home" class="plan">
+      <h2>6-Day Home Workout Plan</h2>
+      <ul>
+        <li><strong>Day 1:</strong> Push-ups (3x15), Squats (3x20), Plank (3x30 sec)</li>
+        <li><strong>Day 2:</strong> Jumping Jacks (3x1 min), Lunges (3x15), Wall Sit (3x30 sec)</li>
+        <li><strong>Day 3:</strong> Burpees (3x10), High Knees (3x1 min), Leg Raises (3x15)</li>
+        <li><strong>Day 4:</strong> Incline Push-ups (3x10), Calf Raises (3x20), Crunches (3x20)</li>
+        <li><strong>Day 5:</strong> Triceps Dips (3x15), Mountain Climbers (3x30 sec), Plank to Push-up (3x10)</li>
+        <li><strong>Day 6:</strong> Shadow Boxing (3x2 min), Side Plank (3x30 sec), Wall Squats (3x1 min)</li>
+        <li><strong>Day 7:</strong> Rest / Light Stretching</li>
+      </ul>
+    </div>
+
+    <div id="loss" class="plan">
+      <h2>6-Day Weight Loss Workout Plan</h2>
+      <ul>
+        <li><strong>Day 1:</strong> Treadmill (20 min), Leg Press (3x12), Lat Pulldown (3x12)</li>
+        <li><strong>Day 2:</strong> Cycling (15 min), Chest Press (3x12), Dumbbell Rows (3x10)</li>
+        <li><strong>Day 3:</strong> HIIT (20 min), Lunges (3x15), Jump Rope (3x1 min)</li>
+        <li><strong>Day 4:</strong> Stair Climber (10 min), Shoulder Press (3x10), Ab Crunch (3x15)</li>
+        <li><strong>Day 5:</strong> Burpees (3x10), Mountain Climbers (3x30 sec), Kettlebell Swings (3x15)</li>
+        <li><strong>Day 6:</strong> Dance/Zumba (30 min), Yoga Cooldown</li>
+        <li><strong>Day 7:</strong> Rest</li>
+      </ul>
+    </div>
+
+    <div id="muscle" class="plan">
+      <h2>7-Day Muscle Gain (Weight Training) Plan</h2>
+      <ul>
+        <li><strong>Day 1 - Chest:</strong> Bench Press, Incline Dumbbell Press, Chest Fly, Push-ups, Cable Crossover</li>
+        <li><strong>Day 2 - Back:</strong> Pull-ups, Deadlifts, Lat Pulldown, Barbell Rows, Seated Cable Row</li>
+        <li><strong>Day 3 - Legs:</strong> Squats, Leg Press, Lunges, Hamstring Curl, Calf Raises</li>
+        <li><strong>Day 4 - Shoulders:</strong> Military Press, Arnold Press, Lateral Raises, Front Raises, Shrugs</li>
+        <li><strong>Day 5 - Arms:</strong> Bicep Curls, Tricep Dips, Hammer Curls, Skull Crushers, Cable Curls</li>
+        <li><strong>Day 6 - Core & Abs:</strong> Planks, Russian Twists, Hanging Leg Raise, Decline Sit-ups, Bicycle Crunches</li>
+        <li><strong>Day 7 - Active Recovery:</strong> Cardio 20 mins + Full Body Stretch</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function togglePlan(planId) {
+      document.querySelectorAll('.plan').forEach(p => p.style.display = 'none');
+      document.getElementById(planId).style.display = 'block';
+    }
+  </script>
+</body>
+</html>
